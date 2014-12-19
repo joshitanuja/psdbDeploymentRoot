@@ -1,0 +1,7 @@
+{
+"psdb": {
+    "useFakeDB":  false,
+    "serverName": "mongodb://tanujaj:a1B2c3@oceanic.mongohq.com:",
+    "infoDBName": "10048/TPTest"
+    }
+}

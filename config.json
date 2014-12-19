@@ -1,0 +1,20 @@
+{
+"Debug": true,
+"test": false,
+"printLog": false,
+"psdb": {
+    "useFakeDB":  true,
+    "fakeserver": "localhost",
+    "serverName": "mongodb://localhost:27017/",
+    "infoDBName": "psdbInfo",
+    "seriesInfoCollectionName": "psdbSeriesInfo",
+    "userInfoCollectionName":  "psdbUsersInfo",
+    "instructorsCollectionName":  "instructors",
+    "eventsCollectionName":  "events",
+    "puzzlesCollectionName":  "puzzles",
+    "playersCollectionName":  "players",
+    "teamsCollectionName":  "teams",
+    "annotationsCollectionName":  "annotations",
+    "puzzleStatesCollectionNamePrefix":  "puzzleStates_"
+	}
+}

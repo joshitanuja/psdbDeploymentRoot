@@ -1,0 +1,11 @@
+{
+"psdbSeriesInfo" :
+	[
+	{ "name": "Fake Test Series1", "_id": "testSeriesId1", "description": "description for test series 1", "database": "SeriesDB_testSeriesId1"},
+	{ "name": "Fake Test Series2", "_id": "testSeriesId2", "description": "description for test series 2", "database":  "SeriesDB_testSeriesId2"}
+	],
+"psdbUsersInfo" :
+	[
+	{ "name": "Admin1", "_id": "testAdminId1", "description": "the one and only admin of the test system", "roleType": ["administrator", "instructor", "player"], "password": "testAdminPassword"}
+	]
+}

@@ -1,0 +1,66 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "required": false,
+    "type": "object" ,
+    "id":"http://eastsideweb.github.io/schema/series.json",
+    "additionalProperties" : false,
+    "properties": {
+        "annotations" :{
+            "required": false,
+            "type": "array" ,
+            "items":
+            {
+                "$ref": "http://eastsideweb.github.io/schema/annotations.json"
+            }
+        },
+        "events" : {
+            "required": false,
+            "type": "array" ,
+            "items":
+            {
+                "$ref": "http://eastsideweb.github.io/schema/events.json"
+                
+            }
+        },
+        "instructors" : {
+            "required": false,
+            "type": "array" ,
+            "items":
+            {
+                "$ref": "http://eastsideweb.github.io/schema/instructors.json"
+            }
+        },
+        "players" : {
+            "required": false,
+            "type": "array" ,
+            "items":
+            {
+                "$ref": "http://eastsideweb.github.io/schema/players.json"
+            }
+        },
+        "puzzles" : {
+            "required": false,
+            "type": "array" ,
+            "items":
+            {
+                "$ref": "http://eastsideweb.github.io/schema/puzzles.json"
+            }
+        },
+        "puzzlestates" : {
+            "required": false,
+            "type": "array" ,
+            "items":
+            {
+                "$ref": "http://eastsideweb.github.io/schema/puzzlestates.json"
+            }
+        },
+        "teams" : {
+            "required": false,
+            "type": "array" ,
+            "items":
+            {
+                "$ref": "http://eastsideweb.github.io/schema/teams.json"
+            }
+        }
+    }
+}

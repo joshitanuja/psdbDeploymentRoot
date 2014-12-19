@@ -1,0 +1,106 @@
+{
+"events" :
+	[
+	{ "name": "Test Event1", 
+      "_id": "eventId1", 
+      "description": "description for event 1 from test series 1",
+      "active": "true",
+      "status":  "notStarted",
+      "puzzleIds":  ["puzzleId1", "puzzleId2"], 
+      "teamIds":  ["teamId1","teamId2"], 
+      "playerIds": ["playerId1", "playerId2", "playerId3", "playerId4"],
+      "instructorIds": ["instructorId1"]
+	}
+    ],
+"puzzles": 
+    [
+	{ "name": "Test Puzzle1", 
+      "_id": "puzzleId1", 
+      "description": "description for test puzzle 1 from test series 1",
+      "active": "true"
+    },
+	{ "name": "Test Puzzle2", 
+      "_id": "puzzleId2", 
+      "description": "description for test puzzle 2 from test series 1",
+      "active": "true"
+    }
+    ],
+"teams" :
+	[
+	{ "name": "Test Team1", 
+      "_id": "teamId1", 
+      "description": "first team with player1 and player2", 
+      "playerIds": ["playerId1", "playerId2"], 
+      "puzzleIds": ["puzzleId1", "puzzleId2"],
+      "teamLeadId":  "playerId1"
+	},
+	{ "name": "Test Team2", 
+      "_id": "teamId2", 
+      "description": "first team with player3 and player4", 
+      "playerIds": ["playerId3", "playerId4"], 
+      "puzzleIds": ["puzzleId1", "puzzleId2"],
+      "teamLeadId":  "playerId3"
+	}
+	],
+"instructors": 
+    [
+	{ "name": "Test Instructor 1", 
+      "_id": "instructorId1", 
+      "description": "one and only instructor of test series 1", 
+      "active": "true",
+      "password":  "instructor1"
+	}
+    ],
+"players": 
+    [
+	{ "name": "Test player 1", 
+      "_id": "playerId1", 
+      "description": "player 1 for the series 1", 
+      "active": "true",
+      "password": "player1"
+	},
+	{ "name": "Test player 2", 
+      "_id": "playerId2", 
+      "description": "player 2 for the series 2", 
+      "active": "true",
+      "password": "player2"
+	},
+    {"name": "Test player 3", 
+      "_id": "playerId3", 
+      "description": "player 3 for the series 3", 
+      "active": "true",
+      "password": "player3"
+	},   	
+    { "name": "Test player 4", 
+      "_id": "playerId4", 
+      "description": "player 4 for the series 4", 
+      "active": "true",
+      "password": "player4"
+	}
+    ],
+"puzzleStates_eventId1": 
+    [
+    { "_id":  "pzst_teamId1_puzzleId1",
+      "teamId":  "teamId1",
+      "puzzleId":  "puzzleId1",
+      "solved":  false
+    },
+    { "_id":  "pzst_teamId1_puzzleId2",
+      "teamId":  "teamId1",
+      "puzzleId":  "puzzleId2",
+      "solved":  false
+    },
+    { "_id":  "pzst_teamId2_puzzleId1",
+      "teamId":  "teamId2",
+      "puzzleId":  "puzzleId1",
+      "solved":  false
+    },
+    { "_id":  "pzst_teamId2_puzzleId2",
+      "teamId":  "teamId2",
+      "puzzleId":  "puzzleId2",
+      "solved":  false
+    }
+    ],
+"annotations": 
+    []
+}

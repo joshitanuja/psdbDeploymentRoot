@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Puzzle Orchestration</title>
+    <!-- Jquery references -->
+    <script src="client/lib/jquery-2.1.1.min.js"></script>
+    <script src="client/lib/jquery.event.gevent-0.2.0.js"></script>
+    <script src="client/lib/jquery.event.ue-0.3.3.js"></script>
+
+    <!-- Linkedin dust and template references -->
+    <script type="text/javascript" src="client/lib/dust-full.min.js"></script>
+    <script type="text/javascript" src="client/templates/templates.js"></script>
+
+    <!-- Module references -->
+    <script type="text/javascript" src="client/psdbClient.config.js"></script>
+    <script type="text/javascript" src="client/psdbClient.js"></script>
+    <script type="text/javascript" src="client/psdbClient.util.js"></script>
+    <script type="text/javascript" src="client/psdbClient.shell.js"></script>
+    <script type="text/javascript" src="client/psdbClient.login.js"></script>
+    <script type="text/javascript" src="client/psdbClient.series.js"></script>
+
+    <!-- Stylesheet references-->
+    <link rel="stylesheet" type="text/css" href="client/styles/style.css">
+    <script>
+        $(function () { psdbClient.initModule($('#psdbClient-container')); });
+    </script>
+
+</head>
+<body>
+    <div id="psdbClient-container">
+        <div class="psdbClient-shell-head">
+            <div class="psdbClient-shell-head-logo">
+                <h1>Puzzle Orchestration</h1>
+                <p>Puzzle hunt software</p>
+            </div>
+            <div class="psdbClient-shell-head-acct"></div>
+        </div>
+        <div class="psdbClient-shell-main">
+            <div class="psdbClient-shell-main-content">
+            </div>
+        </div>
+        <div class="psdbClient-shell-preloader"></div>
+        <div class="psdbClient-shell-modal"></div>
+    </div>
+</body>
+</html>

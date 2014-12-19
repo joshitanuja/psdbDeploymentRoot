@@ -1,0 +1,29 @@
+{
+    "type": "array" ,
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "id":"http://eastsideweb.github.io/schema/seriesList.json",
+    "required": false,
+    "items": {
+        "required": false,
+        "type": "object" ,
+        "additionalProperties" : false,
+        "properties": {
+            "database" : {
+                "required": true,
+                "type": "string"
+            },
+            "description" : {
+                "required": false,
+                "type": "string"
+            },
+            "_id" : {
+                "required": false,
+                "type": "string"
+            },
+            "name" : {
+                "required": true,
+                "type": "string"
+            }
+        }    
+    }    
+}

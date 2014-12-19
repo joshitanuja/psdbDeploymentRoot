@@ -1,0 +1,40 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "required": false,
+    "type": "object" ,
+    "id":"http://eastsideweb.github.io/schema/teams.json",
+    "additionalProperties" : false,
+    "properties": {
+        "description" : {
+            "type": "string"
+        },
+        "_id" : {
+            "type": "string"
+        },
+        "name": {
+            "type": "string" ,
+            "required": true
+        },
+        "playerIds" : {
+            "type": "array" ,
+            "items":
+            {
+                "type": "string"
+            }
+        },
+        "puzzleIds" : {
+            "type": "array" ,
+            "items":
+            {
+                "type": "string"
+            }
+        },
+        "active": {
+            "type": "boolean" ,
+            "default": false
+        },
+        "teamLeadId" : {
+            "type": "string"
+        }
+    }
+}

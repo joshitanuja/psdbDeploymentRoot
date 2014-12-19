@@ -1,0 +1,50 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "object" ,
+    "id":"http://eastsideweb.github.io/schema/annotations.json",
+    "additionalProperties" : false,
+    "properties":
+    {
+        "annotatorId" : {
+                "required": true,
+                "type": "string"
+            },
+        "description" : {
+            "type": "string"
+        },
+        "eventIds" : {
+            "type": "array" ,
+            "items":
+            {
+                "type": "string"
+            }
+        },
+        "_id" : {
+            "type": "string"
+        },
+        "name" : {
+            "type": "string"
+        },
+        "playerIds" : {
+            "type": "array" ,
+            "items":
+            {
+                "type": "string"
+            }
+        },
+        "puzzleIds" : {
+            "type": "array" ,
+            "items":
+            {
+                "type": "string"
+            }
+        },
+        "teamIds" : {
+            "type": "array" ,
+            "items":
+            {
+                "type": "string"
+            }
+        }
+    }
+}
