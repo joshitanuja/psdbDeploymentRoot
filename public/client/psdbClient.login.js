@@ -81,7 +81,17 @@
                 inputObject[item.name] = item.value;
             });
             var requestParams = { isAsync: false, loadPreloader: false };
-            psdbClient.util.postRequest(psdbClient.config.sessionUrl.replace('{id}', seriesId), inputObject, onLogin);
+            psdbClient.util.postRequest(psdbClient.config.sessionUrl.replace('{id}', seriesId), inputObject, function (err, data) {
+                if (err || data === null) {
+                    jqueryMap.$container.find('#continueButton').removeAttr('disabled');
+                    jqueryMap.$container.find('#error').html(err.title);
+                } else {
+                    clearModal();
+
+                    data['seriesId'] = seriesId;
+                    publishLogin(data);
+                }
+            });
         }
 
         function publishLogin(data) {

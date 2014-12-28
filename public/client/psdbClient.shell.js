@@ -5,9 +5,10 @@
             setJqueryMap($container);
 
             psdbClient.login.initModule(jqueryMap.$modal);
-            psdbClient.series.initModule(jqueryMap.$content, jqueryMap.$modal);
+            psdbClient.series.initModule(jqueryMap.$content, jqueryMap.$modal, jqueryMap.$signoutButton);
 
             $.gevent.subscribe(jqueryMap.$acct, 'psdbClient-login', onSeriesLogin);
+            $.gevent.subscribe(jqueryMap.$acct, 'psdbClient-logout', onSeriesLogout);
 
             psdbClient.util.getRequestAsync(psdbClient.config.seriesUrl, renderSeriesTemplate);
         }
@@ -21,8 +22,9 @@
         $acct: null,
         $header: null,
         $modal: null,
-        $content: null
-    }, session;
+        $content: null,
+        $signoutButton: null
+    };
 
     function setJqueryMap($container) {
         jqueryMap = {
@@ -30,7 +32,8 @@
             $acct: $container.find('.psdbClient-shell-head-acct'),
             $header: $container.find('.psdbClient-shell-head'),
             $modal: $container.find('.psdbClient-shell-modal'),
-            $content: $container.find('.psdbClient-shell-main-content')
+            $content: $container.find('.psdbClient-shell-main-content'),
+            $signoutButton: $container.find('#signoutButton')
         };
     }
     ;
@@ -67,6 +70,7 @@
         } else {
             psdbClient.util.renderTemplate(psdbClient.config.listTemplate, { items: data }, jqueryMap.$content);
             jqueryMap.$content.find('a').on('utap.utap', onTapSeries);
+            jqueryMap.$signoutButton.hide();
         }
     }
 })(psdbClient || (psdbClient = {}));
