@@ -1,7 +1,7 @@
 ﻿var psdbClient;
 (function (psdbClient) {
     (function (login) {
-        function initializeSession(seriesId) {
+        function initializeSession(seriesId, seriesParams) {
             psdbClient.util.renderTemplate(psdbClient.config.loginTemplate, null, jqueryMap.$container);
 
             setModalLocation();
@@ -9,6 +9,7 @@
 
             jqueryMap.$container.find('a.btn_close').one('utap.utap', function () {
                 clearModal();
+                $.uriAnchor.setAnchor({});
                 return false;
             });
 
@@ -16,7 +17,7 @@
             $submitBtn.on('click', function () {
                 $submitBtn.attr("disabled", true);
                 jqueryMap.$container.find('#error').html('');
-                getSessionToken(seriesId);
+                getSessionToken(seriesId, seriesParams ? seriesParams : null);
                 return false;
             });
 
@@ -24,7 +25,7 @@
                 if (e.which === 13) {
                     $submitBtn.attr("disabled", true);
                     jqueryMap.$container.find('#error').html('');
-                    getSessionToken(seriesId);
+                    getSessionToken(seriesId, seriesParams ? seriesParams : null);
                     return false;
                 }
             });
@@ -35,7 +36,6 @@
             jqueryMap.$container = $container;
         }
         login.initModule = initModule;
-        ;
 
         var jqueryMap = { $container: null };
 
@@ -74,12 +74,13 @@
             $('#mask').remove();
         }
 
-        function getSessionToken(seriesId) {
+        function getSessionToken(seriesId, seriesParams) {
             var input = $('#loginForm :input').serializeArray();
             var inputObject = {};
             $.each(input, function (index, item) {
                 inputObject[item.name] = item.value;
             });
+
             var requestParams = { isAsync: false, loadPreloader: false };
             psdbClient.util.postRequest(psdbClient.config.sessionUrl.replace('{id}', seriesId), inputObject, function (err, data) {
                 if (err || data === null) {
@@ -88,7 +89,9 @@
                 } else {
                     clearModal();
 
-                    data['seriesId'] = seriesId;
+                    data.seriesId = seriesId;
+                    data.roleType = inputObject.roleType;
+                    data.seriesParams = seriesParams;
                     publishLogin(data);
                 }
             });

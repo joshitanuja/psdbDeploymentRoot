@@ -88,15 +88,53 @@ a.btn_close {
     border-width: 1px;
     border-radius: 5px;
     color: #000;
-    cursor: pointer;
+    cursor: none;
     display: inline-block;
     padding: 8px 1px 8px;
     margin-top: 10px;
     font: 14px;
     width: 214px;
+    background: #dbd6d6;
 }
 
-.button:hover {
-    background: #ddd;
+.button-small {
+    border-color: #ddd;
+    border-width: 1px;
+    border-radius: 5px;
+    color: #000;
+    cursor: none;
+    display: inline-block;
+    padding: 8px 1px 8px;
+    margin-top: 10px;
+    font: 14px;
+    width: 100px;
+    background: #dbd6d6;
+}
+
+
+/*.button:disabled .button-small:disabled{
+    border-color:#000;
+    color:#ff0000;
+    background-color:#ddd;
+}
+    */
+
+.button:enabled:hover{
+    cursor:pointer;
+    background: #888888;
+}
+.button-small:enabled:hover{
+    cursor:pointer;
+    background: #888888;
+}
+
+#objlist {
+    width: 200px;
+}
+#objlist .ui-selecting {
+    background: #ffd800;
+}
+#objlist .ui-selected {
+    background: #ff6a00;
 }
 /*Modal box style*/

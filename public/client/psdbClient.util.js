@@ -1,8 +1,9 @@
 ﻿var psdbClient;
 (function (psdbClient) {
     (function (util) {
-        function renderTemplate(templateName, data, $container) {
+        function renderTemplate(templateName, data, $container, rendercallback) {
             dust.render(templateName, data, function (err, out) {
+                var html = rendercallback ? rendercallback(out) : out;
                 $container.html(out);
             });
         }

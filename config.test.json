@@ -1,9 +1,5 @@
 {
 "Debug": true,
-"test": false,
-"printLog": true,
-"psdb": {
-    "useFakeDB":  false,
-    "infoDBName": "testpsdbInfo"
-	}
+"test": true,
+"printLog": false
 }

@@ -19,11 +19,12 @@ router.get('/', function (request, response) {
 });
 
 router.get('/series', function (request, response, next) {
-    var query = (request.query !== null) ? request.query : {};
-    var series = psdb.findSeries(query, function (err, seriesList) {
+    var query = (request.query !== null) ? psdb.translateURLQuery(request.query) : {};
+    var series = psdb.findSeries(query.findMap, query.projectionMap, function (err, seriesList) {
         if (err) {
             next(err);
         } else {
+            response.setHeader('Cache-Control', 'no-cache, no-store');
             response.json(seriesList);
         }
     });
@@ -58,7 +59,7 @@ router.delete('/series/:id/session/:token', function (request, response, next) {
 });
 
 router.all('/:type*', function (request, response, next) {
-    var token = request.headers['token'];
+    var token = request.header('token');
     if (validator.isValidString(token)) {
         next();
     } else {
@@ -67,56 +68,167 @@ router.all('/:type*', function (request, response, next) {
 });
 
 router.get('/:type', function (request, response, next) {
-    var token = request.headers['token'];
-    var query = (request.query !== null) ? request.query : {};
+    var token = request.header('token');
+    var query = (request.query !== null) ? psdb.translateURLQuery(request.query) : {};
     var series = psdb.series(token);
-    series.findObj(request.params.type, query, {}, function (err, list) {
+    series.findObj(request.params.type, query.findMap, query.projectionMap, function (err, list) {
         if (err) {
             next(err);
         } else {
+            response.setHeader('Cache-Control', 'no-cache, no-store');
             response.json(list);
         }
     });
 });
 
-router.get('/:type/:id', function (request, response) {
-    response.json(200, {});
+router.get('/:type/:id', function (request, response, next) {
+    var token = request.header('token');
+
+    var series = psdb.series(token);
+    series.findObj(request.params.type, { "_id": request.params.id }, {}, function (err, list) {
+        if (err) {
+            next(err);
+        } else {
+            response.setHeader('Cache-Control', 'no-cache, no-store');
+            response.json(list);
+        }
+    });
 });
 
-router.get('/:type/:id/status', function (request, response) {
-    response.json(200, {});
+router.get('/:type/:id/status', function (request, response, next) {
+    if (request.params.type !== "events") {
+        next(new Error('This is an invalid token ( ' + token + ' ) please provide a valid session token'));
+    } else {
+        var token = request.header('token');
+
+        var series = psdb.series(token);
+        series.findObj(request.params.type, { "_id": request.params.id }, { _id: 0, status: 1 }, function (err, list) {
+            if (err) {
+                next(err);
+            } else {
+                response.setHeader('Cache-Control', 'no-cache, no-store');
+                response.json(200, list[0].status);
+            }
+        });
+    }
 });
 
 router.post('/:type', function (request, response, next) {
-    response.json(200, {});
+    var token = request.header('token');
+    var series = psdb.series(token);
+    var newObj = request.body;
+    series.addObj(request.params.type, newObj, function (err, objInfo) {
+        if (err) {
+            next(err);
+        } else {
+            response.setHeader('Cache-Control', 'no-cache, no-store');
+            response.json(200, objInfo);
+        }
+    });
 });
 
-router.put('/:type/:id', function (request, response) {
-    response.json({});
+router.put('/teams/:teamId/puzzlestates/:puzzleId', function (request, response, next) {
+    var token = request.header('token');
+    var series = psdb.series(token);
+    var puzzlestate = request.body.puzzleStateSolved;
+    series.updatePuzzleState(request.params.teamId, request.params.puzzleId, puzzlestate, function (err) {
+        if (err !== null) {
+            next(err);
+        } else {
+            response.send(200);
+        }
+    });
 });
 
-router.delete('/:type/:id', function (request, response) {
-    response.json(200, {});
+router.put('/:type/:id', function (request, response, next) {
+    var token = request.header('token');
+    var series = psdb.series(token);
+    series.updateObj(request.params.type, request.params.id, request.body, function (err, count) {
+        if (err !== null) {
+            next(err);
+        } else {
+            response.send(200);
+        }
+    });
 });
 
-router.post('/:type/:id/:associatedtype', function (request, response) {
-    response.json(200, {});
+router.delete('/:type/:id', function (request, response, next) {
+    var token = request.header('token');
+    var series = psdb.series(token);
+
+    series.deleteObj(request.params.type, { "_id": request.params.id }, function (err, count) {
+        if (err) {
+            next(err);
+        } else if (count !== 1) {
+            next(new Error('Object deletion failed'));
+        } else {
+            response.send(200);
+        }
+    });
 });
 
-router.put('/:type/:id/active', function (request, response) {
-    response.json(200, {});
+router.put('/:type/:id/active', function (request, response, next) {
+    var token = request.header('token');
+    var series = psdb.series(token);
+    series.setActive(request.params.type, request.params.id, request.body.active, function (err) {
+        if (err) {
+            next(err);
+        } else {
+            response.send(200);
+        }
+    });
 });
 
-router.put('/:type/:id/status', function (request, response) {
-    response.json(200, {});
+router.put('/events/:id/status', function (request, response, next) {
+    var token = request.header('token');
+    var series = psdb.series(token);
+    console.log(" events/id/status got " + JSON.stringify(request.body));
+    series.setEventStatus(request.params.id, request.body.status, function (err) {
+        if (err !== null) {
+            next(err);
+        } else {
+            response.send(200);
+        }
+    });
 });
 
-router.put('/:type/:id/puzzlestates/id', function (request, response) {
-    response.json(200, {});
+router.get('/:type/:id/:associatedtype', function (request, response, next) {
+    var token = request.header('token');
+    var series = psdb.series(token);
+    series.findObj(request.params.type, { "_id": request.params.id }, {}, function (err, list) {
+        if (err) {
+            next(err);
+        } else {
+            response.setHeader('Cache-Control', 'no-cache, no-store');
+            response.json(200, list[0][request.params.associatedtype]);
+        }
+    });
 });
 
-router.delete('/:type/:id/:associatedtype', function (request, response) {
-    response.json(200, {});
+router.put('/:type/:id/:associatedtype', function (request, response, next) {
+    var token = request.header('token');
+    var series = psdb.series(token);
+    var itemList = request.body;
+    series.addItemsToObj(itemList, request.params.associatedtype, request.params.id, request.params.type, function (err) {
+        if (err !== null) {
+            next(err);
+        } else {
+            response.send(200);
+        }
+    });
+});
+
+router.delete('/:type/:id/:associatedtype', function (request, response, next) {
+    var token = request.header('token');
+    var series = psdb.series(token);
+    var itemList = request.body;
+    series.removeItemsFromObj(itemList, request.params.associatedtype, request.params.id, request.params.type, function (err, count) {
+        if (err !== null) {
+            next(err);
+        } else {
+            response.json(200, { "count": count });
+        }
+    });
 });
 
 module.exports = router;
