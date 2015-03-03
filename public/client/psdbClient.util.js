@@ -5,11 +5,12 @@
             dust.render(templateName, data, function (err, out) {
                 var html = rendercallback ? rendercallback(out) : out;
                 $container.html(out);
+                $container.attr("templateId", templateName);
             });
         }
         util.renderTemplate = renderTemplate;
 
-        function handleError(err, $container, ignoreError) {
+        function handleError(err, $container, anchorMap, ignoreError) {
             if (typeof ignoreError === "undefined") { ignoreError = false; }
             if (!ignoreError) {
                 renderTemplate(psdbClient.config.modalTemplate, err, $container);
@@ -24,6 +25,9 @@
 
                     return false;
                 });
+                if (anchorMap) {
+                    $.uriAnchor.setAnchor(anchorMap, null, true);
+                }
             }
         }
         util.handleError = handleError;
@@ -42,12 +46,19 @@
         }
         util.postRequest = postRequest;
 
-        function deleteRequest(url, callback, requestParams) {
+        function deleteRequest(url, data, callback, requestParams) {
             requestParams = checkRequestParams(requestParams);
             requestParams.isAsync = false;
-            makeRequest('delete', url, null, callback, requestParams);
+            makeRequest('delete', url, data, callback, requestParams);
         }
         util.deleteRequest = deleteRequest;
+
+        function putRequest(url, data, callback, requestParams) {
+            requestParams = checkRequestParams(requestParams);
+            requestParams.isAsync = false;
+            makeRequest('put', url, data, callback, requestParams);
+        }
+        util.putRequest = putRequest;
 
         function getRequestAsync(url, callback, requestParams) {
             requestParams = checkRequestParams(requestParams);
@@ -63,12 +74,19 @@
         }
         util.postRequestAsync = postRequestAsync;
 
-        function deleteRequestAsync(url, callback, requestParams) {
+        function deleteRequestAsync(url, data, callback, requestParams) {
             requestParams = checkRequestParams(requestParams);
             requestParams.isAsync = true;
-            makeRequest('delete', url, null, callback, requestParams);
+            makeRequest('delete', url, data, callback, requestParams);
         }
         util.deleteRequestAsync = deleteRequestAsync;
+
+        function putRequestAsync(url, data, callback, requestParams) {
+            requestParams = checkRequestParams(requestParams);
+            requestParams.isAsync = true;
+            makeRequest('put', url, data, callback, requestParams);
+        }
+        util.putRequestAsync = putRequestAsync;
 
         function encodeData(data) {
             return encodeURIComponent(data).replace(/\-/g, "%2D").replace(/\_/g, "%5F").replace(/\./g, "%2E").replace(/\!/g, "%21").replace(/\~/g, "%7E").replace(/\*/g, "%2A").replace(/\'/g, "%27").replace(/\(/g, "%28").replace(/\)/g, "%29");

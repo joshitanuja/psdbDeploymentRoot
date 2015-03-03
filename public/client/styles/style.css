@@ -127,14 +127,21 @@ a.btn_close {
     cursor:pointer;
     background: #888888;
 }
+/*Modal box style*/
 
-#objlist {
+#objsublist {
     width: 200px;
 }
-#objlist .ui-selecting {
+.ui-selecting {
     background: #ffd800;
 }
-#objlist .ui-selected {
+.ui-selected {
     background: #ff6a00;
 }
-/*Modal box style*/
+
+.mediumtext {
+    font-size:14px;
+}
+.smalltext{
+  font-size:12px;
+  }

@@ -53,7 +53,7 @@ router.delete('/series/:id/session/:token', function (request, response, next) {
         if (err) {
             next(err);
         } else {
-            response.send(200);
+            response.json(200, {});
         }
     });
 });
@@ -135,7 +135,7 @@ router.put('/teams/:teamId/puzzlestates/:puzzleId', function (request, response,
         if (err !== null) {
             next(err);
         } else {
-            response.send(200);
+            response.json(200, {});
         }
     });
 });
@@ -147,7 +147,7 @@ router.put('/:type/:id', function (request, response, next) {
         if (err !== null) {
             next(err);
         } else {
-            response.send(200);
+            response.json(200, {});
         }
     });
 });
@@ -162,7 +162,7 @@ router.delete('/:type/:id', function (request, response, next) {
         } else if (count !== 1) {
             next(new Error('Object deletion failed'));
         } else {
-            response.send(200);
+            response.json(200, {});
         }
     });
 });
@@ -174,7 +174,7 @@ router.put('/:type/:id/active', function (request, response, next) {
         if (err) {
             next(err);
         } else {
-            response.send(200);
+            response.json(200, {});
         }
     });
 });
@@ -187,7 +187,7 @@ router.put('/events/:id/status', function (request, response, next) {
         if (err !== null) {
             next(err);
         } else {
-            response.send(200);
+            response.json(200, {});
         }
     });
 });
@@ -213,7 +213,7 @@ router.put('/:type/:id/:associatedtype', function (request, response, next) {
         if (err !== null) {
             next(err);
         } else {
-            response.send(200);
+            response.json(200, {});
         }
     });
 });
